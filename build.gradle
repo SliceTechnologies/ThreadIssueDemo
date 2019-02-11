@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+project.archivesBaseName = 'slice-interview-threadpool'
+project.description = 'Test interview application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+group = 'com.test'
+version = '1.0.0'
+
+task executeDefault(type:JavaExec) {
+    main = 'com.test.Application'
+    classpath = sourceSets.main.runtimeClasspath
+    args "default"
+}
+
+task executeExperiment(type:JavaExec) {
+    main = 'com.test.Application'
+    classpath = sourceSets.main.runtimeClasspath
+    args "experiment"
+}
