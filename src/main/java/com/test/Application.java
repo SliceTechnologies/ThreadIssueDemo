@@ -19,7 +19,7 @@ public class Application {
         final ArrayList<Future<String>> resultFutures = new ArrayList<>();
 
         final EntityService entityService = new EntityService();
-        for (int i = 0; i < threadPoolCapacity-1; i++) {
+        for (int i = 0; i < threadPoolCapacity; i++) {
             final Task task = new Task(entityService, "hanging_entity_id");
             resultFutures.add(taskProcessor.calculate(task));
         }

@@ -1,8 +1,8 @@
 package com.test.processor;
 
 import com.test.task.Task;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +13,7 @@ public class TaskProcessorDefault implements TaskProcessor {
     public TaskProcessorDefault() {
         int maximumPoolSize = 25;
         int queueSize = 25;
-        this.executor = new ThreadPoolExecutor(5, maximumPoolSize, 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>(queueSize),
+        this.executor = new ThreadPoolExecutor(maximumPoolSize, maximumPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(queueSize),
                 new ThreadPoolExecutor.AbortPolicy());
     }
 
