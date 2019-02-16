@@ -36,7 +36,9 @@ public class Application {
         }
 
         // each task shouldn't take more that 1000ms, so 2000ms must be enough
-        System.out.println(immediateTaskFuture.get(2000, TimeUnit.MILLISECONDS));
+        // workaround: each working thread takes 1000 ms for business logic and additional time for initialization of locks,
+        // map operation, lock/unlock invocation. So we need some extra time (100ms) for this logic
+        System.out.println(immediateTaskFuture.get(2100, TimeUnit.MILLISECONDS));
 
         for (Future<String> resultFuture : resultFutures) {
             System.out.println(">> " + resultFuture.get());
