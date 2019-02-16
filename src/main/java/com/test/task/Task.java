@@ -13,6 +13,10 @@ public class Task implements Callable<String> {
         this.entityId = entityId;
     }
 
+    public String getEntityId() {
+        return entityId;
+    }
+
     public String call() {
         entityService.modifyEntity(entityId);
         return entityId;
