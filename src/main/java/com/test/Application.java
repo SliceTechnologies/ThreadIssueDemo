@@ -5,6 +5,7 @@ import com.test.processor.TaskProcessor;
 import com.test.service.EntityService;
 import com.test.task.Task;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.*;
 
 public class Application {
@@ -19,16 +20,18 @@ public class Application {
         final ArrayList<Future<String>> resultFutures = new ArrayList<>();
 
         final EntityService entityService = new EntityService();
+        String hanging_entity_id = UUID.randomUUID().toString();
         for (int i = 0; i < threadPoolCapacity; i++) {
-            final Task task = new Task(entityService, "hanging_entity_id");
+            final Task task = new Task(entityService, hanging_entity_id);
             resultFutures.add(taskProcessor.calculate(task));
         }
 
         final Future<String> immediateTaskFuture;
         // Now executor is fully busy - both threads and queue are occupied by 50 events with the same marker
         try {
+            String immediate_entity_id = UUID.randomUUID().toString();
             immediateTaskFuture = taskProcessor
-                    .calculate(new Task(entityService, "immediate_entity_id"));
+                    .calculate(new Task(entityService, immediate_entity_id));
             // this brings to exception even though task itself would be processed immediately
         } catch (RejectedExecutionException e) {
             System.out.println("Failed due to threadpool executor blocking.");
